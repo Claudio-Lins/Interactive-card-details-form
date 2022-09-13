@@ -1,12 +1,13 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
-import { Activity } from "phosphor-react";
-import { CardFront } from "../components/CardFront";
+import { useState } from "react";
 import { CardBack } from "../components/CardBack";
+import { CardFront } from "../components/CardFront";
 import { Form } from "../components/Form";
 
 const Home: NextPage = () => {
+  
+
   return (
     <main className=" flex h-screen w-screen flex-col items-center bg-white md:flex-row">
       <Head>
@@ -18,8 +19,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex h-64 w-full items-center justify-center bg-main-desktop bg-cover bg-left bg-no-repeat md:h-screen md:w-1/3" />
-      <div className="absolute flex flex-col items-center justify-evenly pb-6  md:w-full md:flex-row">
-        <div className="my-10 flex w-full flex-col md:flex-col-reverse items-center gap-8 md:w-1/3">
+      <div className="absolute flex flex-col items-center justify-evenly pb-6 px-4 w-full md:flex-row">
+        <div className="my-10 flex w-full flex-col items-center gap-8 md:w-1/3 md:flex-col-reverse">
           <CardBack />
           <CardFront />
         </div>
