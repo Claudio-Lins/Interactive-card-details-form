@@ -19,7 +19,7 @@ const Home: NextPage = () => {
       </Head>
       <div className="flex h-64 w-full items-center justify-center bg-main-desktop bg-cover bg-left bg-no-repeat md:h-screen md:w-1/3" />
       <div className="absolute flex flex-col items-center justify-evenly pb-6  md:w-full md:flex-row">
-        <div className="my-10 flex w-full flex-col items-center gap-8">
+        <div className="my-10 flex w-full flex-col md:flex-col-reverse items-center gap-8 md:w-1/3">
           <CardBack />
           <CardFront />
         </div>
