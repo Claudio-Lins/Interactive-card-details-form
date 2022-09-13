@@ -9,8 +9,9 @@ export function CardFront() {
           <Image
             src="/images/card-logo.svg"
             alt="card front"
-            width={84}
-            height={47}
+            layout="fill"
+            // width={84}
+            // height={47}
           />
         </div>
 
