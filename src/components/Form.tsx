@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { isStringObject } from "util/types";
 import { Completed } from "./Completed";
 import { Input } from "./Input";
 
@@ -20,18 +21,18 @@ export function Form() {
 
   function handleSubmit(e: { preventDefault: () => void }) {
     e.preventDefault();
-    cardholderName === ""
-      ? setMessageErrorName("Cant be blank")
-      : setMessageErrorName("");
-    cardNumber === ""
-      ? setMessageErrorNumber("Cant be blank")
-      : setMessageErrorNumber("");
-    month === ""
-      ? setMessageErrorDate("Cant be blank")
-      : year === ""
-      ? setMessageErrorDate("Cant be blank")
-      : setMessageErrorDate("");
-    cvv === "" ? setMessageErrorCvv("Cant be blank") : setMessageErrorCvv("");
+    // cardholderName === ""
+    //   ? setMessageErrorName("Cant be blank")
+    //   : setMessageErrorName("");
+    // cardNumber === ""
+    //   ? setMessageErrorNumber("Cant be blank")
+    //   : setMessageErrorNumber("");
+    // month === ""
+    //   ? setMessageErrorDate("Cant be blank")
+    //   : year === ""
+    //   ? setMessageErrorDate("Cant be blank")
+    //   : setMessageErrorDate("");
+    // cvv === "" ? setMessageErrorCvv("Cant be blank") : setMessageErrorCvv("");
     if (
       cardholderName !== "" &&
       cardNumber !== "" &&
@@ -41,6 +42,12 @@ export function Form() {
     ) {
       setComplete(true);
     }
+  }
+
+  function checkValidity():
+    | React.FocusEventHandler<HTMLInputElement>
+    | undefined {
+    throw new Error("Function not implemented.");
   }
 
   return (
@@ -61,13 +68,20 @@ export function Form() {
               Cardholder name
             </label>
             <input
-              className="w-full rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
+              className="peer w-full rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
               onChange={(e) => setCardholderName(e.target.value)}
               type="text"
               placeholder={"e.g. Jane Appleseed"}
+              // pattern caracteres, numbers, spaces, and dashes minimum 3 characters
+              pattern="^[a-zA-Z0-9\s-]{3,}$"
+              // pattern="[A-Za-z]{3,99}"
             />
-            <span className="mt-1 block text-[9px] font-semibold text-red-500">
-              {messageErrorName}
+            <span
+              className={`
+            mt-1 hidden text-[9px] font-semibold text-red-500 peer-invalid:block
+            `}
+            >
+              Must be more than 3 characters long
             </span>
           </div>
           <div className="">
@@ -78,42 +92,99 @@ export function Form() {
               Card Number
             </label>
             <input
-              className="w-full rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
+              className="peer w-full rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
               onChange={(e) => setCardNumber(e.target.value)}
               type="text"
               placeholder={"e.g. 1234 5678 9123 0000"}
+              pattern="[0-9]{16}"
             />
-            <span className="mt-1 block text-[9px] font-semibold text-red-500">
-              {messageErrorNumber}
+            <span
+              className={`
+            mt-1 hidden text-[9px] font-semibold text-red-500 peer-invalid:block
+            `}
+            >
+              Wrong format, must be 16 digits, only numbers
             </span>
           </div>
           <div className="flex justify-between gap-4">
-            <div className="w-1/2">
-              <label
-                className="mb-2 w-full text-[10px] font-bold uppercase tracking-widest text-gray-600"
-                htmlFor="name"
-              >
-                Exp. date (mm/yy)
-              </label>
-              <div className="flex gap-2">
-                <input
-                  className="w-full rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
-                  onChange={(e) => setMonth(e.target.value)}
-                  type="number"
-                  placeholder="MM"
-                />
-                <div className="">
+            <div className="flex w-full justify-between gap-2">
+              <div className="flex w-full flex-col">
+                <p className="mb-2 w-full text-[10px] font-bold uppercase tracking-widest text-gray-600">
+                  Exp. date (MM/YY)
+                </p>
+                <div className="flex w-full gap-2 relative">
                   <input
-                    className="w-full rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
-                    onChange={(e) => setYear(e.target.value)}
-                    type="number"
-                    placeholder="YY"
+                    className="peer w-1/2 rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
+                    onChange={(e) => setMonth(e.target.value)}
+                    type="text"
+                    placeholder="MM"
+                    pattern="[0-9]{2}"
                   />
+                  <input
+                    className="peer w-1/2 rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
+                    onChange={(e) => setYear(e.target.value)}
+                    type="text"
+                    placeholder="YY"
+                    pattern="[0-9]{2}"
+                  />
+                  <span className="mt-1 absolute top-10 hidden text-[9px] font-semibold text-red-500 peer-invalid:block">
+                    Cant be blank
+                  </span>
                 </div>
               </div>
-              <span className="mt-1 block text-[9px] font-semibold text-red-500">
-                {messageErrorDate}
-              </span>
+              <div className="flex w-full flex-col">
+                <p className="mb-2 w-full text-[10px] font-bold uppercase tracking-widest text-gray-600">
+                  Cvv
+                </p>
+                <input
+                  className="peer w-full rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
+                  onChange={(e) => setCvv(e.target.value)}
+                  type="text"
+                  placeholder={"123"}
+                  pattern="[0-9]{3}"
+                />
+                <span className="mt-1 hidden text-[9px] font-semibold text-red-500 peer-invalid:block">
+                    Cant be blank
+                  </span>
+              </div>
+            </div>
+          </div>
+
+          {/* <div className="flex justify-between gap-4">
+            <div className="w-1/2">
+                <label
+                  className="mb-2 w-full text-[10px] font-bold uppercase tracking-widest text-gray-600"
+                  htmlFor="name"
+                >
+                  Exp. date (mm/yy)
+                </label>
+              <div className="">
+                <div className="flex gap-2">
+                  <input
+                    className="peer w-1/2 rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
+                    onChange={(e) => setMonth(e.target.value)}
+                    type="text"
+                    placeholder="MM"
+                    pattern="[0-9]{2}"
+                  />
+                  <span className="mt-1 hidden text-[9px] font-semibold text-red-500 peer-invalid:block">
+                    Cant be blank
+                  </span>
+                </div>
+              </div>
+              <div className="">
+                <input
+                  className="peer w-1/2 rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
+                  onChange={(e) => setYear(e.target.value)}
+                  type="text"
+                  placeholder="YY"
+                  pattern="[0-9]{2}"
+                />
+
+                <span className="mt-1 hidden text-[9px] font-semibold text-red-500 peer-invalid:block">
+                  Cant be blank
+                </span>
+              </div>
             </div>
             <div className="">
               <label
@@ -123,16 +194,21 @@ export function Form() {
                 cvv
               </label>
               <input
-                className="w-full rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
+                className="peer w-full rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
                 onChange={(e) => setCvv(e.target.value)}
-                type="number"
+                type="text"
                 placeholder={"123"}
+                pattern="[0-9]{3}"
               />
-              <span className="mt-1 block text-[9px] font-semibold text-red-500">
-                {messageErrorCvv}
+              <span
+                className={`
+            mt-1 hidden text-[9px] font-semibold text-red-500 peer-invalid:block
+            `}
+              >
+                Cant be blank
               </span>
             </div>
-          </div>
+          </div> */}
         </>
       )}
       <button
