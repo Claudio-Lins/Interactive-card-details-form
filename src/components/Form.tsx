@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Completed } from "./Completed";
 
-interface FormProps {
-  handleSubmit: (e: { preventDefault: () => void }) => void;
-}
 
 export function Form() {
   const [complete, setComplete] = useState(false);
