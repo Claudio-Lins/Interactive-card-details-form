@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useState } from "react";
 import { CardBack } from "../components/CardBack";
 import { CardFront } from "../components/CardFront";
 import { Form } from "../components/Form";
