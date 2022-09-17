@@ -1,14 +1,32 @@
 import React, { useState } from "react";
 import { Completed } from "./Completed";
 
+interface FormProps {
+  cardNumber: string;
+  setCardNumber: React.Dispatch<React.SetStateAction<string>>;
+  cardholderName: string;
+  setCardholderName: React.Dispatch<React.SetStateAction<string>>;
+  month: string;
+  setMonth: React.Dispatch<React.SetStateAction<string>>;
+  year: string;
+  setYear: React.Dispatch<React.SetStateAction<string>>;
+  cvv: string;
+  setCvv: React.Dispatch<React.SetStateAction<string>>;
+}
 
-export function Form() {
+export function Form({
+  cardNumber,
+  setCardNumber,
+  setCardholderName,
+  month,
+  setMonth,
+  year,
+  setYear,
+  cvv,
+  setCvv,
+}: FormProps) {
   const [complete, setComplete] = useState(false);
-  const [cardholderName, setCardholderName] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
-  const [cvv, setCvv] = useState("");
+
   const [messageErrorName, setMessageErrorName] = useState("");
   const [messageErrorNumber, setMessageErrorNumber] = useState("");
   const [messageErrorDate, setMessageErrorDate] = useState("");
@@ -16,15 +34,15 @@ export function Form() {
 
   function handleSubmit(e: { preventDefault: () => void }) {
     e.preventDefault();
-    if (
-      cardholderName !== "" &&
-      cardNumber !== "" &&
-      month !== "" &&
-      year !== "" &&
-      cvv !== ""
-    ) {
-      setComplete(true);
-    }
+    // if (
+    //   cardholderName !== "" &&
+    //   cardNumber !== "" &&
+    //   month !== "" &&
+    //   year !== "" &&
+    //   cvv !== ""
+    // ) {
+    //   setComplete(true);
+    // }
   }
 
   function checkValidity():
@@ -32,6 +50,7 @@ export function Form() {
     | undefined {
     throw new Error("Function not implemented.");
   }
+
 
   return (
     <form
@@ -93,7 +112,7 @@ export function Form() {
                 <p className="mb-2 w-full text-[10px] font-bold uppercase tracking-widest text-gray-600">
                   Exp. date (MM/YY)
                 </p>
-                <div className="flex w-full gap-2 relative">
+                <div className="relative flex w-full gap-2">
                   <input
                     className="peer w-1/2 rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
                     onChange={(e) => setMonth(e.target.value)}
@@ -108,7 +127,7 @@ export function Form() {
                     placeholder="YY"
                     pattern="[0-9]{2}"
                   />
-                  <span className="mt-1 absolute top-10 hidden text-[9px] font-semibold text-red-500 peer-invalid:block">
+                  <span className="absolute top-10 mt-1 hidden text-[9px] font-semibold text-red-500 peer-invalid:block">
                     Cant be blank
                   </span>
                 </div>
@@ -125,8 +144,8 @@ export function Form() {
                   pattern="[0-9]{3}"
                 />
                 <span className="mt-1 hidden text-[9px] font-semibold text-red-500 peer-invalid:block">
-                    Cant be blank
-                  </span>
+                  Cant be blank
+                </span>
               </div>
             </div>
           </div>
