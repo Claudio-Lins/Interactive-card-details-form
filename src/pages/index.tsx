@@ -41,8 +41,8 @@ const Home: NextPage = () => {
           <Form
             cardNumber={cardNumber}
             setCardNumber={setCardNumber}
-            cardholderName={cardholderName}
-            setCardholderName={setCardholderName}
+            cardholdeName={cardholderName}
+            setCardholdeName={setCardholderName}
             month={month}
             setMonth={setMonth}
             year={year}

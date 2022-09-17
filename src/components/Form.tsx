@@ -4,8 +4,8 @@ import { Completed } from "./Completed";
 interface FormProps {
   cardNumber: string;
   setCardNumber: React.Dispatch<React.SetStateAction<string>>;
-  cardholderName: string;
-  setCardholderName: React.Dispatch<React.SetStateAction<string>>;
+  cardholdeName: string;
+  setCardholdeName: React.Dispatch<React.SetStateAction<string>>;
   month: string;
   setMonth: React.Dispatch<React.SetStateAction<string>>;
   year: string;
@@ -17,7 +17,8 @@ interface FormProps {
 export function Form({
   cardNumber,
   setCardNumber,
-  setCardholderName,
+  cardholdeName,
+  setCardholdeName,
   month,
   setMonth,
   year,
@@ -34,15 +35,15 @@ export function Form({
 
   function handleSubmit(e: { preventDefault: () => void }) {
     e.preventDefault();
-    // if (
-    //   cardholderName !== "" &&
-    //   cardNumber !== "" &&
-    //   month !== "" &&
-    //   year !== "" &&
-    //   cvv !== ""
-    // ) {
-    //   setComplete(true);
-    // }
+    if (
+      cardholdeName !== "" &&
+      cardNumber !== "" &&
+      month !== "" &&
+      year !== "" &&
+      cvv !== ""
+    ) {
+      setComplete(true);
+    }
   }
 
   function checkValidity():
@@ -71,7 +72,7 @@ export function Form({
             </label>
             <input
               className="peer w-full rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
-              onChange={(e) => setCardholderName(e.target.value)}
+              onChange={(e) => setCardholdeName(e.target.value)}
               type="text"
               placeholder={"e.g. Jane Appleseed"}
               pattern="^[a-zA-Z0-9\s-]{3,}$"
