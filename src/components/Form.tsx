@@ -46,12 +46,19 @@ export function Form({
     }
   }
 
+  const handleOnKeyDown = (e: React.FormEvent<HTMLInputElement>) => {
+    e.currentTarget.maxLength = 19
+    let value = e.currentTarget.value
+    if (value.length === 4 || value.length === 9 || value.length === 14) {
+      e.currentTarget.value = value + ' '
+    }
+  }
+
   function checkValidity():
     | React.FocusEventHandler<HTMLInputElement>
     | undefined {
     throw new Error("Function not implemented.");
   }
-
 
   return (
     <form
@@ -97,7 +104,8 @@ export function Form({
               onChange={(e) => setCardNumber(e.target.value)}
               type="text"
               placeholder={"e.g. 1234 5678 9123 0000"}
-              pattern="[0-9]{16}"
+              onKeyDown={handleOnKeyDown}
+              pattern="[0-9\s]{19}"
             />
             <span
               className={`
@@ -119,6 +127,8 @@ export function Form({
                     onChange={(e) => setMonth(e.target.value)}
                     type="text"
                     placeholder="MM"
+                    max={12}
+                    maxLength={2}
                     pattern="[0-9]{2}"
                   />
                   <input
@@ -126,6 +136,8 @@ export function Form({
                     onChange={(e) => setYear(e.target.value)}
                     type="text"
                     placeholder="YY"
+                    max={22}
+                    maxLength={2}
                     pattern="[0-9]{2}"
                   />
                   <span className="absolute top-10 mt-1 hidden text-[9px] font-semibold text-red-500 peer-invalid:block">
@@ -142,6 +154,7 @@ export function Form({
                   onChange={(e) => setCvv(e.target.value)}
                   type="text"
                   placeholder={"123"}
+                    maxLength={3}
                   pattern="[0-9]{3}"
                 />
                 <span className="mt-1 hidden text-[9px] font-semibold text-red-500 peer-invalid:block">
