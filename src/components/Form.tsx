@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { isStringObject } from "util/types";
 import { Completed } from "./Completed";
-import { Input } from "./Input";
 
 interface FormProps {
   handleSubmit: (e: { preventDefault: () => void }) => void;
@@ -21,18 +19,6 @@ export function Form() {
 
   function handleSubmit(e: { preventDefault: () => void }) {
     e.preventDefault();
-    // cardholderName === ""
-    //   ? setMessageErrorName("Cant be blank")
-    //   : setMessageErrorName("");
-    // cardNumber === ""
-    //   ? setMessageErrorNumber("Cant be blank")
-    //   : setMessageErrorNumber("");
-    // month === ""
-    //   ? setMessageErrorDate("Cant be blank")
-    //   : year === ""
-    //   ? setMessageErrorDate("Cant be blank")
-    //   : setMessageErrorDate("");
-    // cvv === "" ? setMessageErrorCvv("Cant be blank") : setMessageErrorCvv("");
     if (
       cardholderName !== "" &&
       cardNumber !== "" &&
@@ -72,9 +58,7 @@ export function Form() {
               onChange={(e) => setCardholderName(e.target.value)}
               type="text"
               placeholder={"e.g. Jane Appleseed"}
-              // pattern caracteres, numbers, spaces, and dashes minimum 3 characters
               pattern="^[a-zA-Z0-9\s-]{3,}$"
-              // pattern="[A-Za-z]{3,99}"
             />
             <span
               className={`
@@ -149,66 +133,6 @@ export function Form() {
               </div>
             </div>
           </div>
-
-          {/* <div className="flex justify-between gap-4">
-            <div className="w-1/2">
-                <label
-                  className="mb-2 w-full text-[10px] font-bold uppercase tracking-widest text-gray-600"
-                  htmlFor="name"
-                >
-                  Exp. date (mm/yy)
-                </label>
-              <div className="">
-                <div className="flex gap-2">
-                  <input
-                    className="peer w-1/2 rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
-                    onChange={(e) => setMonth(e.target.value)}
-                    type="text"
-                    placeholder="MM"
-                    pattern="[0-9]{2}"
-                  />
-                  <span className="mt-1 hidden text-[9px] font-semibold text-red-500 peer-invalid:block">
-                    Cant be blank
-                  </span>
-                </div>
-              </div>
-              <div className="">
-                <input
-                  className="peer w-1/2 rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
-                  onChange={(e) => setYear(e.target.value)}
-                  type="text"
-                  placeholder="YY"
-                  pattern="[0-9]{2}"
-                />
-
-                <span className="mt-1 hidden text-[9px] font-semibold text-red-500 peer-invalid:block">
-                  Cant be blank
-                </span>
-              </div>
-            </div>
-            <div className="">
-              <label
-                className="mb-2 w-full text-[10px] font-bold uppercase tracking-widest text-gray-600"
-                htmlFor="name"
-              >
-                cvv
-              </label>
-              <input
-                className="peer w-full rounded-md border-gray-300 placeholder:text-sm placeholder:font-bold placeholder:tracking-wider placeholder:text-gray-400"
-                onChange={(e) => setCvv(e.target.value)}
-                type="text"
-                placeholder={"123"}
-                pattern="[0-9]{3}"
-              />
-              <span
-                className={`
-            mt-1 hidden text-[9px] font-semibold text-red-500 peer-invalid:block
-            `}
-              >
-                Cant be blank
-              </span>
-            </div>
-          </div> */}
         </>
       )}
       <button
