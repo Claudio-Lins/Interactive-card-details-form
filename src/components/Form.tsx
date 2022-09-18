@@ -54,12 +54,6 @@ export function Form({
     }
   }
 
-  function checkValidity():
-    | React.FocusEventHandler<HTMLInputElement>
-    | undefined {
-    throw new Error("Function not implemented.");
-  }
-
   return (
     <form
       action=""
@@ -86,7 +80,8 @@ export function Form({
             />
             <span
               className={`
-            mt-1 hidden text-[9px] font-semibold text-red-500 peer-invalid:block
+                mt-1 hidden text-[9px] font-semibold text-red-500 peer-invalid:block
+                ${cardNumber === "" ? "hidden" : "block"}
             `}
             >
               Must be more than 3 characters long
