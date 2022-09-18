@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Completed } from "./Completed";
 
 interface FormProps {
@@ -27,11 +27,26 @@ export function Form({
   setCvv,
 }: FormProps) {
   const [complete, setComplete] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
 
-  const [messageErrorName, setMessageErrorName] = useState("");
-  const [messageErrorNumber, setMessageErrorNumber] = useState("");
-  const [messageErrorDate, setMessageErrorDate] = useState("");
-  const [messageErrorCvv, setMessageErrorCvv] = useState("");
+  // const [messageErrorName, setMessageErrorName] = useState("");
+  // const [messageErrorNumber, setMessageErrorNumber] = useState("");
+  // const [messageErrorDate, setMessageErrorDate] = useState("");
+  // const [messageErrorCvv, setMessageErrorCvv] = useState("");
+
+  useEffect(() => {
+    if (
+      cardNumber.length === 19 &&
+      cardholdeName.length > 3 &&
+      month.length === 2 &&
+      year.length === 2 &&
+      cvv.length >= 3
+    ) {
+      setIsComplete(true);
+    } else {
+      setIsComplete(false);
+    }
+  }, [cardNumber, cardholdeName, month, year, cvv]);
 
   function handleSubmit(e: { preventDefault: () => void }) {
     e.preventDefault();
@@ -51,12 +66,11 @@ export function Form({
     let value = e.currentTarget.value
     if (value.length === 4 || value.length === 9 || value.length === 14) {
       e.currentTarget.value = value + ' '
-    }
+    } 
   }
 
   return (
     <form
-      action=""
       onSubmit={handleSubmit}
       className="flex w-full max-w-[350px] flex-col gap-4"
     >
@@ -81,7 +95,6 @@ export function Form({
             <span
               className={`
                 mt-1 hidden text-[9px] font-semibold text-red-500 peer-invalid:block
-                ${cardNumber === "" ? "hidden" : "block"}
             `}
             >
               Must be more than 3 characters long
@@ -162,7 +175,8 @@ export function Form({
       )}
       <button
         type="submit"
-        className="mt-4 w-full rounded-md bg-gray-900 py-3 text-sm text-gray-300"
+        className={`${isComplete ? "mt-4 w-full rounded-md py-3 text-sm text-gray-300 bg-gray-900 cursor-pointer" : "mt-4 w-full rounded-md py-3 text-sm text-gray-300 bg-gray-500 cursor-not-allowed"}
+        `}
       >
         Confirm
       </button>
